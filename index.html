@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hhj 网站用于分享资源</title>
+  <style>
+    /* 原有样式保留 */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #3a8dff;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+    /* 添加 Windows7 图标到 header 左上角 */
+    header::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 40px;
+      height: 40px;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Windows_7_logo_and_wordmark.svg/500px-Windows_7_logo_and_wordmark.svg.png');
+      background-size: cover;
+    }
+    nav {
+      text-align: center;
+      background-color: #333;
+      padding: 10px 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #f4f7f6;
+    }
+    .container {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .resource-card {
+      background-color: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .resource-card h2 {
+      color: #3a8dff;
+    }
+    .resource-card p {
+      font-size: 14px;
+    }
+    .btn {
+      background-color: #3a8dff;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background-color: #277bb5;
+    }
+
+    /* 新增密码弹窗样式 */
+    #passwordModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+    }
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    #passwordInput {
+      padding: 10px;
+      margin: 15px 0;
+      width: 200px;
+      border: 2px solid #3a8dff;
+      border-radius: 5px;
+      background-color: #3a8dff;  /* 设置密码输入框背景为蓝色 */
+      color: white;
+    }
+
+    /* 禁用右键菜单 */
+    body {
+      -webkit-user-select: none; /* 禁用文本选择 */
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- 密码验证弹窗 -->
+  <div id="passwordModal">
+    <div class="modal-content">
+      <h2>请输入访问密码</h2>
+      <input type="password" id="passwordInput" placeholder="输入访问密码">
+      <button onclick="checkPassword()" class="btn">提交</button>
+      <p id="errorMsg" style="color: red; margin-top: 10px;"></p>
+    </div>
+  </div>
+
+  <!-- 原有页面内容 -->
+  <header>
+    <h1>hhj 网站用于分享资源</h1>
+    <p>提供优质资源免费下载与分享</p>
+  </header>
+
+  <nav>
+    <a href="#">主页</a>
+    <a href="#">资源列表</a>
+  </nav>
+
+  <div class="container">
+    <!-- 酷我音乐破解版资源 -->
+    <div class="resource-card">
+      <h2>酷我音乐破解版登陆就送VIP.apk</h2>
+      <p>下载链接：<a href="https://www.123684.com/s/FGbKjv-abbDH" target="_blank" class="btn">点击下载</a></p>
+      <p>安装后即可享受酷我音乐的VIP特权，无需充值即可体验所有会员功能。</p>
+    </div>
+
+    <!-- 千千静听资源 -->
+    <div class="resource-card">
+      <h2>千千静听包含皮肤</h2>
+      <p>下载链接：<a href="https://pan.huang1111.cn/s/vVbAYSE" target="_blank" class="btn">点击下载</a></p>
+      <p>密码：千千静听</p>
+      <p>此资源包含千千静听播放器及附带的皮肤包。</p>
+    </div>
+  </div>
+
+  <script>
+    // 页面加载时显示密码弹窗
+    window.onload = function() {
+      const modal = document.getElementById('passwordModal');
+      // 检查是否已有验证通过的标记
+      if (!localStorage.getItem('authPassed')) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // 禁用滚动
+      }
+    };
+
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const errorMsg = document.getElementById('errorMsg');
+      const modal = document.getElementById('passwordModal');
+
+      // 提高密码安全性（更复杂的密码）
+      if (input === 'HuiOp9568@SecurePassword!') {
+        // 验证通过
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // 恢复滚动
+        localStorage.setItem('authPassed', 'true');
+      } else {
+        errorMsg.textContent = '密码错误，请重新输入！';
+        document.getElementById('passwordInput').value = '';
+      }
+    }
+
+    // 防止直接访问内容
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        e.preventDefault();
+        alert('禁止开发者工具！');
+      }
+    });
+
+    // 禁用右键菜单
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      alert('禁止右键菜单！');
+    });
+
+    // 反调试保护：检测开发者工具是否开启
+    function detectDevTools() {
+      const startTime = new Date();
+      debugger; // 在这里插入断点，开发者工具打开时会出现延迟
+      const endTime = new Date();
+      const timeDiff = endTime - startTime;
+
+      if (timeDiff > 100) {
+        alert('检测到开发者工具已开启！');
+        return true;
+      }
+      return false;
+    }
+
+    // 定时检测开发者工具是否开启
+    setInterval(() => {
+      if (detectDevTools()) {
+        alert('禁止使用开发者工具！');
+        window.location.reload(); // 可以选择刷新页面
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
